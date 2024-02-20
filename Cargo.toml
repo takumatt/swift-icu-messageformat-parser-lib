@@ -1,0 +1,14 @@
+[package]
+name = "swift-icu-messageformat-parser"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[lib]
+crate-type = ["staticlib"]
+
+[build-dependencies]
+swift-bridge-build = "0.1.52"
+
+[dependencies]
+swift-bridge = "0.1.52"
