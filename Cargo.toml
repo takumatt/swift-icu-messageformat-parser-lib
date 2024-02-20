@@ -11,4 +11,5 @@ crate-type = ["staticlib"]
 swift-bridge-build = "0.1.52"
 
 [dependencies]
+icu-messageformat-parser = "0.0.2"
 swift-bridge = "0.1.52"
