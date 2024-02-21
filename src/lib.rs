@@ -3,13 +3,8 @@ use icu_messageformat_parser::ParserOptions;
 #[swift_bridge::bridge]
 mod ffi {
     extern "Rust" {
-        fn hello_rust() -> String;
         fn icu_message_format(message: &str) -> Option<String>;
     }
-}
-
-fn hello_rust() -> String {
-    "Hello, Rust!".to_string()
 }
 
 fn icu_message_format<'a>(message: &'a str) -> Option<String> {
