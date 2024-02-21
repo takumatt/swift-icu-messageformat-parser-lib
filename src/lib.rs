@@ -1,4 +1,3 @@
-use std::error::Error;
 use icu_messageformat_parser::ParserOptions;
 
 #[swift_bridge::bridge]
