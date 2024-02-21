@@ -17,7 +17,11 @@ fn icu_message_format<'a>(message: &'a str) -> Option<String> {
     let parsed = parser.parse();
     match parsed {
         Ok(ast) => {
-            Some(format!("{:?}", ast))
+            let json_str = serde_json::to_string(&ast);
+            match json_str {
+                Ok(str) => Some(str),
+                Err(_e) => None
+            }
         },
         Err(_e) => None,
     }
