@@ -264,8 +264,9 @@ public struct Span: Decodable {
   public let end: Position
 }
 
-public struct NumberArgStyle: Decodable {
-  
+public enum NumberArgStyle: Decodable {
+  case style(String)
+  case skeleton(NumberSkeleton)
 }
 
 public enum DateTimeArgStyle: Decodable {
@@ -299,6 +300,18 @@ public struct DateTimeSkeleton: Decodable {
   public let pattern: String
   public let location: Span?
   // public let parsedOptions:
+}
+
+public struct NumberSkeleton: Decodable {
+  public let skeletonType: SkeletonType
+  public let tokens: [NumberSkeletonToken]
+  public let location: Span?
+  // public let parsedOptions:
+}
+
+public struct NumberSkeletonToken: Decodable {
+  public let stem: String
+  public let options: [String]
 }
 
 // MARK: CodingKeys
