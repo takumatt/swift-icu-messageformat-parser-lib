@@ -2,20 +2,22 @@ import Foundation
 
 public enum ICUMessageFormatParser {
   
+  private static let jsonDecoder: JSONDecoder = .init()
+  
   public static func parse(
     _ message: String,
-    using decoder: JSONDecoder,
     options: ICUMessageFormatParserOptions
   ) throws -> Ast? {
+    
     guard let json = icu_message_format(message, options._parserOptions)?.toString() else {
-      return nil
+      throw ICUMessageFormatParserError.invalidJSON
     }
     
     guard let data = json.data(using: .utf8) else {
-      return nil
+      throw ICUMessageFormatParserError.invalidJSON
     }
     
-    let ast = try decoder.decode(Ast.self, from: data)
+    let ast = try jsonDecoder.decode(Ast.self, from: data)
     return ast
   }
   
@@ -41,4 +43,8 @@ public struct ICUMessageFormatParserOptions {
     )
   }
   
+}
+
+public enum ICUMessageFormatParserError: Error {
+  case invalidJSON
 }
