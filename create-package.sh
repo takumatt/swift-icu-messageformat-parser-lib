@@ -7,3 +7,5 @@ swift-bridge-cli create-package \
   --simulator target/universal-ios/debug/libswift_icu_messageformat_parser.a \
   --macos target/universal-macos/debug/libswift_icu_messageformat_parser.a \
   --name ICUMessageParser \
+
+  cp -a ./src/swift/ ./ICUMessageParser/Sources/ICUMessageParser
