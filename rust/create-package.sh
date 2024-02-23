@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd "$(dirname "$0")"
+
 swift-bridge-cli create-package \
   --bridges-dir ./generated \
   --out-dir ../ \
