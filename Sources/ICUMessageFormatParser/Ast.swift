@@ -109,9 +109,9 @@ public struct ArgumentElement: Decodable {
 }
 
 public struct NumberElement: Decodable {
-  let value: String
-  let span: Span?
-  let style: NumberArgStyle?
+  public let value: String
+  public let span: Span?
+  public let style: NumberArgStyle?
   
   private enum CodingKeys: String, CodingKey {
     case value
