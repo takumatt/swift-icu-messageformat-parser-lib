@@ -1,8 +1,43 @@
 import RustXcframework
-public func icu_message_format<GenericToRustStr: ToRustStr>(_ message: GenericToRustStr, _ options: ParserOptions) -> Optional<RustString> {
-    return message.toRustStr({ messageAsRustStr in
-        { let val = __swift_bridge__$icu_message_format(messageAsRustStr, options.intoFfiRepr()); if val != nil { return RustString(ptr: val!) } else { return nil } }()
-    })
+public func icu_message_format(_ message: MessageWrapper, _ options: ParserOptions) -> Optional<RustString> {
+    { let val = __swift_bridge__$icu_message_format(message.intoFfiRepr(), options.intoFfiRepr()); if val != nil { return RustString(ptr: val!) } else { return nil } }()
+}
+public struct MessageWrapper {
+    public var message: RustString
+
+    public init(message: RustString) {
+        self.message = message
+    }
+
+    @inline(__always)
+    func intoFfiRepr() -> __swift_bridge__$MessageWrapper {
+        { let val = self; return __swift_bridge__$MessageWrapper(message: { let rustString = val.message.intoRustString(); rustString.isOwned = false; return rustString.ptr }()); }()
+    }
+}
+extension __swift_bridge__$MessageWrapper {
+    @inline(__always)
+    func intoSwiftRepr() -> MessageWrapper {
+        { let val = self; return MessageWrapper(message: RustString(ptr: val.message)); }()
+    }
+}
+extension __swift_bridge__$Option$MessageWrapper {
+    @inline(__always)
+    func intoSwiftRepr() -> Optional<MessageWrapper> {
+        if self.is_some {
+            return self.val.intoSwiftRepr()
+        } else {
+            return nil
+        }
+    }
+
+    @inline(__always)
+    static func fromSwiftRepr(_ val: Optional<MessageWrapper>) -> __swift_bridge__$Option$MessageWrapper {
+        if let v = val {
+            return __swift_bridge__$Option$MessageWrapper(is_some: true, val: v.intoFfiRepr())
+        } else {
+            return __swift_bridge__$Option$MessageWrapper(is_some: false, val: __swift_bridge__$MessageWrapper())
+        }
+    }
 }
 public struct ParserOptions {
     public var ignore_tag: Bool

@@ -1,7 +1,14 @@
+use ffi::MessageWrapper;
+
 #[swift_bridge::bridge]
 mod ffi {
     extern "Rust" {
-        fn icu_message_format(message: &str, options: ParserOptions) -> Option<String>;
+        fn icu_message_format(message: &MessageWrapper, options: ParserOptions) -> Option<String>;
+    }
+
+    #[swift_bridge(swift_repr = "struct")]
+    struct MessageWrapper {
+        message: String
     }
 
     #[swift_bridge(swift_repr = "struct")]
@@ -14,9 +21,9 @@ mod ffi {
     }
 }
 
-fn icu_message_format<'a>(message: &'a str, options: ffi::ParserOptions) -> Option<String> {
+fn icu_message_format<'a>(message_wrapper: MessageWrapper, options: ffi::ParserOptions) -> Option<String> {
     let mut parser = icu_messageformat_parser::Parser::new(
-        message, 
+        &message_wrapper.message, 
         &icu_messageformat_parser::ParserOptions::new(
             options.ignore_tag,
             options.requires_other_clause,

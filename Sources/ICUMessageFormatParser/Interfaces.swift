@@ -9,7 +9,7 @@ public enum ICUMessageFormatParser {
     options: ICUMessageFormatParserOptions
   ) throws -> Ast {
     
-    guard let json = icu_message_format(message, options._parserOptions)?.toString() else {
+    guard let json = icu_message_format(.init(message: .init(message)), options._parserOptions)?.toString() else {
       throw ICUMessageFormatParserError.invalidJSON
     }
     
