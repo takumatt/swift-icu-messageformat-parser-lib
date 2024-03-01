@@ -1,7 +1,89 @@
 import RustXcframework
-public func icu_message_format(_ message: MessageWrapper, _ options: ParserOptions) -> Optional<RustString> {
-    { let val = __swift_bridge__$icu_message_format(message.intoFfiRepr(), options.intoFfiRepr()); if val != nil { return RustString(ptr: val!) } else { return nil } }()
+
+public class RustApp: RustAppRefMut {
+    var isOwned: Bool = true
+
+    public override init(ptr: UnsafeMutableRawPointer) {
+        super.init(ptr: ptr)
+    }
+
+    deinit {
+        if isOwned {
+            __swift_bridge__$RustApp$_free(ptr)
+        }
+    }
 }
+extension RustApp {
+    public convenience init() {
+        self.init(ptr: __swift_bridge__$RustApp$new())
+    }
+}
+public class RustAppRefMut: RustAppRef {
+    public override init(ptr: UnsafeMutableRawPointer) {
+        super.init(ptr: ptr)
+    }
+}
+public class RustAppRef {
+    var ptr: UnsafeMutableRawPointer
+
+    public init(ptr: UnsafeMutableRawPointer) {
+        self.ptr = ptr
+    }
+}
+extension RustAppRef {
+    public func icu_message_format(_ message_wrapper: MessageWrapper, _ options: ParserOptions) -> Optional<RustString> {
+        { let val = __swift_bridge__$RustApp$icu_message_format(ptr, message_wrapper.intoFfiRepr(), options.intoFfiRepr()); if val != nil { return RustString(ptr: val!) } else { return nil } }()
+    }
+}
+extension RustApp: Vectorizable {
+    public static func vecOfSelfNew() -> UnsafeMutableRawPointer {
+        __swift_bridge__$Vec_RustApp$new()
+    }
+
+    public static func vecOfSelfFree(vecPtr: UnsafeMutableRawPointer) {
+        __swift_bridge__$Vec_RustApp$drop(vecPtr)
+    }
+
+    public static func vecOfSelfPush(vecPtr: UnsafeMutableRawPointer, value: RustApp) {
+        __swift_bridge__$Vec_RustApp$push(vecPtr, {value.isOwned = false; return value.ptr;}())
+    }
+
+    public static func vecOfSelfPop(vecPtr: UnsafeMutableRawPointer) -> Optional<Self> {
+        let pointer = __swift_bridge__$Vec_RustApp$pop(vecPtr)
+        if pointer == nil {
+            return nil
+        } else {
+            return (RustApp(ptr: pointer!) as! Self)
+        }
+    }
+
+    public static func vecOfSelfGet(vecPtr: UnsafeMutableRawPointer, index: UInt) -> Optional<RustAppRef> {
+        let pointer = __swift_bridge__$Vec_RustApp$get(vecPtr, index)
+        if pointer == nil {
+            return nil
+        } else {
+            return RustAppRef(ptr: pointer!)
+        }
+    }
+
+    public static func vecOfSelfGetMut(vecPtr: UnsafeMutableRawPointer, index: UInt) -> Optional<RustAppRefMut> {
+        let pointer = __swift_bridge__$Vec_RustApp$get_mut(vecPtr, index)
+        if pointer == nil {
+            return nil
+        } else {
+            return RustAppRefMut(ptr: pointer!)
+        }
+    }
+
+    public static func vecOfSelfAsPtr(vecPtr: UnsafeMutableRawPointer) -> UnsafePointer<RustAppRef> {
+        UnsafePointer<RustAppRef>(OpaquePointer(__swift_bridge__$Vec_RustApp$as_ptr(vecPtr)))
+    }
+
+    public static func vecOfSelfLen(vecPtr: UnsafeMutableRawPointer) -> UInt {
+        __swift_bridge__$Vec_RustApp$len(vecPtr)
+    }
+}
+
 public struct MessageWrapper {
     public var message: RustString
 

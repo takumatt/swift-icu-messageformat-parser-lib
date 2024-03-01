@@ -1,15 +1,19 @@
 import Foundation
 
-public enum ICUMessageFormatParser {
+public class ICUMessageFormatParser {
   
-  private static let jsonDecoder: JSONDecoder = .init()
+  private let rustApp: RustApp = .init()
   
-  public static func parse(
+  private let jsonDecoder: JSONDecoder = .init()
+  
+  public init() { }
+  
+  public func parse(
     _ message: String,
     options: ICUMessageFormatParserOptions
   ) throws -> Ast {
     
-    guard let json = icu_message_format(.init(message: .init(message)), options._parserOptions)?.toString() else {
+    guard let json = rustApp.icu_message_format(.init(message: .init(message)), options._parserOptions)?.toString() else {
       throw ICUMessageFormatParserError.invalidJSON
     }
     
